@@ -36,9 +36,8 @@
 #define LT_E LCTL_T(FR_E) // Home row
 #define LT_N LSFT_T(FR_N) // Home row
 
-#define LT_REP LT(_NAV_NUM, KC_F20)   // Thumb cluster
-#define LT_BSPC LT(_SYM,KC_BSPC)  // Thumb cluster
-#define LT_ENT LT(_SYM, KC_ENT)     // Thumb cluster
+#define LT_BSPC LT(_NAV_NUM,KC_BSPC)  // Thumb cluster
+#define LT_TAB LT(_SYM, KC_TAB)       // Thumb cluster
 
 // Right hand
 #define OSL_DK OSL(_DEAD)  // Top row
@@ -48,14 +47,14 @@
 #define RALT_XX RALT_T(XXXXXXX) // Home row
 #define RGUI_XX RGUI_T(XXXXXXX) // Home row
 
-#define LT_R RSFT_T(FR_R) // Home row
-#define LT_T RCTL_T(FR_T) // Home row
-#define LT_I RALT_T(FR_I) // Home row
-#define LT_U RGUI_T(FR_U) // Home row
+#define LT_R LSFT_T(FR_R) // Home row
+#define LT_T LCTL_T(FR_T) // Home row
+#define LT_I LALT_T(FR_I) // Home row
+#define LT_U LGUI_T(FR_U) // Home row
 
 
-#define LT_SPC LT(_NAV_NUM, KC_SPC)     // Thumb cluster
-#define LT_ESC LT(_SYM,KC_ESC)   // Thumb cluster
+#define LT_SPC LT(_NAV_NUM, KC_SPC)   // Thumb cluster
+#define LT_ENT LT(_SYM, KC_ENT)       // Thumb cluster
 
 enum layers {
     _ALPHA,
@@ -72,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
            LT_Q,    FR_C,    FR_O,    FR_P,    FR_W,            FR_J,    FR_M,    FR_D,  OSL_DK,    FR_Y,
            LT_A,    LT_S,    LT_E,    LT_N,    FR_F,            FR_L,    LT_R,    LT_T,    LT_I,    LT_U,
            FR_Z,    FR_X, FR_MINS,    FR_V,    FR_B,          FR_DOT,    FR_H,    FR_G, FR_COMM,    FR_K,
-                          XXXXXXX, LT_BSPC,  LT_REP,          LT_SPC,  LT_ENT, XXXXXXX
+                          XXXXXXX, LT_TAB,  LT_BSPC,          LT_SPC,  LT_ENT, XXXXXXX
     ),
     [_SYM] = LAYOUT_split_3x5_3(
         FR_CIRC, FR_LABK, FR_RABK,  FR_DLR, FR_PERC,           FR_AT, FR_AMPR, FR_ASTR, FR_QUOT,  FR_GRV,
@@ -84,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_TAB, KC_HOME,   KC_UP,  KC_END, KC_PGUP,         FR_SLSH,    FR_7,    FR_8,    FR_9, XXXXXXX,
         XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN,         FR_MINS,    FR_4,    FR_5,    FR_6,    FR_0,
         XXXXXXX, KC_VOLD, KC_MUTE, KC_VOLU,   S_TAB,         FR_COMM,    FR_1,    FR_2,    FR_3,  FR_DOT,
-                          _______,  KC_DEL, _______,         _______,  KC_ESC, _______
+                          _______, _______,  KC_DEL,         _______,  KC_ESC, _______
     ),
     [_FUN] = LAYOUT_split_3x5_3(
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,         XXXXXXX,   KC_F7,   KC_F8,   KC_F9,  KC_F12,
@@ -141,23 +140,3 @@ const key_override_t *key_overrides[] = {
     &shift_oe_is_capital_oe,
     &shift_ae_is_capital_ae
 };
-
-bool remember_last_key_user(uint16_t keycode, keyrecord_t* record, uint8_t* remembered_mods) {
-    if (keycode == LT_REP) {
-        return false;
-    }
-    return true;
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    switch (keycode) {
-        case LT_REP:
-            if (record->tap.count) {  // On tap.
-                // alt_repeat_key_invoke(&record->event);
-                repeat_key_invoke(&record->event);
-                return false;  // Skip default handling.
-            }
-            return true;  // Continue default handling.
-        }
-    return true;
-}
