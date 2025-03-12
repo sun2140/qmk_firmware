@@ -37,7 +37,7 @@
 #define LT_N LSFT_T(FR_N) // Home row
 
 #define LT_REP LT(_NAV_NUM, KC_F20)   // Thumb cluster
-#define LT_BSPC LSFT_T(KC_BSPC)  // Thumb cluster
+#define LT_BSPC LT(_SYM,KC_BSPC)  // Thumb cluster
 #define LT_ENT LT(_SYM, KC_ENT)     // Thumb cluster
 
 // Right hand
